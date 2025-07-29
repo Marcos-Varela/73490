@@ -1,52 +1,60 @@
-alert("Hola :D")
-
 const empleadosAutorizados = ["Laura", "Carlos", "Ana", "Luis", "Silvia"];
 
-//El usuario debe loguearse previo al ingreso a la pagina
+// LOGIN
+const loginForm = document.getElementById("login-form");
+const empresaInput = document.getElementById("empresa-codigo");
+const usuarioInput = document.getElementById("usuario-numero");
+const loginMensaje = document.getElementById("login-mensaje");
 
-let num = prompt ("Indique codigo de la Empresa")
-let num2 = prompt ("Indique su numero de usuario")
+const menuSection = document.getElementById("menu-section");
 
-if(num == 1 && num2 <= 5){
-    console.log("Bienvenido! Elijamos tu almuerzo");
-}if(num == 1 && num2 > 5){
-    console.log("La empresa no registra este numero de usuario");
-}else if(num != 1 && num2 <= 5)
-    console.log("Usted no pertenece a esta empresa")
+loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
+    const empresa = parseInt(empresaInput.value);
+    const usuario = parseInt(usuarioInput.value);
 
-function estaAutorizado(nombre) {
-  
-  if (empleadosAutorizados.includes(nombre)) {
-    return true;
-  } else {
-    return false;
-  }
-}
+    if (empresa === 1 && usuario <= 5) {
+        loginMensaje.textContent = "Bienvenido/a. Elijamos tu almuerzo.";
+        loginForm.style.display = "none";
+        menuSection.style.display = "block";
+    } else if (empresa === 1 && usuario > 5) {
+        loginMensaje.textContent = "La empresa no registra este número de usuario.";
+    } else if (empresa !== 1 && usuario <= 5) {
+        loginMensaje.textContent = "Usted no pertenece a esta empresa.";
+    } else {
+        loginMensaje.textContent = "Datos incorrectos.";
+    }
+});
 
-function verificarAcceso(nombre) {
-  const autorizado = estaAutorizado(nombre); 
+// MENÚ
+const menuForm = document.getElementById("menu-form");
+const empleadoInput = document.getElementById("empleado-nombre");
+const menuSelect = document.getElementById("menu-elegido");
+const menuMensaje = document.getElementById("menu-mensaje");
 
-  if (autorizado) {
-    console.log(`${nombre} tiene acceso permitido.`);
-  } else {
-    console.log(`${nombre} NO tiene acceso.`);
-  }
-}
+menuForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-verificarAcceso("Laura");
-verificarAcceso("Sergio");
+    const nombre = empleadoInput.value.trim();
+    const menu = menuSelect.value;
 
-//El servicio incluye ocho menues rotativos durante los cinco dias habiles de la semana
+    if (!empleadosAutorizados.includes(nombre)) {
+        menuMensaje.textContent = `${nombre} NO está autorizado a elegir menú.`;
+        return;
+    }
 
-for (let i = 1; i <= 8; i++) {
-  console.log("Menu número: " + i);
-}
-/*let menu1 = ("Fideos bolognesa")
-let menu2 = ("Milanesa de carne con pure")
-let menu3 = ("Ensalada de hojas con pechuga grille")
-let menu4 = ("Carne guisada")
-let menu5 = ("Cuarto de pollo con papas dore")
-let menu6 = ("Carre de cerdo con batatas al horno")
-let menu7 = ("Suprema rellena con ensalada de zanahoria y huevo")
-let menu8 = ("Estofado de ave")*/
+    const eleccion = {
+        nombre,
+        menu,
+        fecha: new Date().toLocaleDateString()
+    };
+
+    let elecciones = JSON.parse(localStorage.getItem("elecciones")) || [];
+    elecciones.push(eleccion);
+    localStorage.setItem("elecciones", JSON.stringify(elecciones));
+
+    menuMensaje.textContent = `${nombre} eligió el menú: ${menu}. ¡Buen provecho!`;
+    menuForm.reset();
+});
+
