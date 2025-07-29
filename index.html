@@ -1,16 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tu Comedor</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/index.js" defer ></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/index.js" defer></script>
 </head>
 <body>
     <header>
         <h1>Bienvenido a TuComedor!</h1>
-        <h2>Si no cumpli la consigna ojala esto se pueda modificar D:</h2>
-    </header>  
+        <p>Seleccioná tus platos del día:</p>
+    </header>
+
+    <main>
+        <section id="login-section">
+            <h2>Ingreso al sistema</h2>
+            <form id="login-form">
+                <input type="number" id="empresa-codigo" placeholder="Código de Empresa" required />
+                <input type="number" id="usuario-numero" placeholder="Número de Usuario" required />
+                <button type="submit">Ingresar</button>
+            </form>
+            <p id="login-mensaje"></p>
+        </section>
+
+        <section id="menu-section" style="display:none;">
+            <h2>Menú del día</h2>
+            <form id="menu-form">
+                <label for="empleado-nombre">Nombre:</label>
+                <input type="text" id="empleado-nombre" placeholder="Nombre del empleado" required />
+
+                <label for="menu-elegido">Elija su menú:</label>
+                <select id="menu-elegido">
+                    <option value="Fideos bolognesa">Fideos bolognesa</option>
+                    <option value="Milanesa con puré">Milanesa con puré</option>
+                    <option value="Ensalada + pechuga">Ensalada + pechuga</option>
+                    <option value="Carne guisada">Carne guisada</option>
+                    <option value="Pollo con papas">Pollo con papas</option>
+                    <option value="Cerdo con batatas">Cerdo con batatas</option>
+                    <option value="Suprema rellena">Suprema rellena</option>
+                    <option value="Estofado de ave">Estofado de ave</option>
+                </select>
+                <button type="submit">Guardar elección</button>
+            </form>
+            <p id="menu-mensaje"></p>
+        </section>
+    </main>
 </body>
 </html>
